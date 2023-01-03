@@ -1,5 +1,7 @@
 package com.polidea.reactnativeble.errors;
 
+import android.util.Log;
+
 import com.polidea.reactnativeble.exceptions.CannotMonitorCharacteristicException;
 import com.polidea.reactnativeble.utils.UUIDConverter;
 import com.polidea.rxandroidble.exceptions.BleAlreadyConnectedException;
@@ -12,6 +14,8 @@ import com.polidea.rxandroidble.exceptions.BleScanException;
 public class ErrorConverter {
 
     public Error toError(Throwable throwable) {
+        Log.e("toError", throwable.toString());
+        Log.e("toError", throwable.getClass().getName());
         if (throwable instanceof CannotMonitorCharacteristicException) {
             CannotMonitorCharacteristicException exception = (CannotMonitorCharacteristicException)throwable;
             String uuid = UUIDConverter.fromUUID(exception.getCharacteristic().getUuid());
@@ -39,6 +43,7 @@ public class ErrorConverter {
     }
 
     private Error toError(BleScanException bleScanException) {
+        Log.e("bleScanException", bleScanException.toString());
         final int reason = bleScanException.getReason();
         switch (reason) {
             case BleScanException.BLUETOOTH_CANNOT_START:
